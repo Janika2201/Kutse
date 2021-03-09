@@ -8,13 +8,32 @@ using System.Web.Mvc;
 
 namespace Kutsee_Appp.Controllers
 {
+   
     public class HomeController : Controller
     {
+        Guest gu;
+        string emlid;
+
         public ActionResult Index()
         {
-            ViewBag.Message = "Ootan sind minu peole! Palun tule!!!";
             int hour = DateTime.Now.Hour;
-            ViewBag.Greeting = hour < 10 ? "Tere hommikust!" : "Tere päevast!";
+            if (hour >= 4 && hour < 12)
+            {
+                ViewBag.Greeting = "Tere hommikust";
+            }
+            else if (hour >= 12 && hour < 16)
+            {
+                ViewBag.Greeting = "Tere päevast";
+            }
+            else if (hour >= 16 && hour < 23)
+            {
+                ViewBag.Greeting = "Tere õhtust";
+            }
+            else if (hour == 23 || hour < 4)
+            {
+                ViewBag.Greeting = "Head ööd";
+            }
+            
             return View();
            
         }
@@ -28,10 +47,22 @@ namespace Kutsee_Appp.Controllers
         public ViewResult Questionnaire(Guest guest)
         {
             E_mail(guest);
-            if (ModelState.IsValid) { return View("Thanks", guest); }
+            if (ModelState.IsValid)
+            {
+                return View("Thanks", guest);
+            }
             else
-            { return View(); }
+            {
+                return View();
+            }
         }
+        
+        public ViewResult Thanks()
+        {
+            WebMail.Send(gu.Email, "Meeldetuletus", gu.Name + ", Ära unusta ootame Teid peos!. Pidu toimub 22.01.21. Sind ootavad väga!");
+            return View();
+        }
+        
 
         private void E_mail(Guest guest)
         {
@@ -50,33 +81,6 @@ namespace Kutsee_Appp.Controllers
             {
                 ViewBag.Message = "Mul on kahju! Ei saa kirja saada!!!";
             }
-        }
-        
-
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-        private string Tervis(DateTime dateTime)
-        {
-            int hour = dateTime.Hour;
-            return hour switch
-            {
-                >= 4 and < 12 => "Tere hommikust",
-                >= 12 and < 17 => "Tere päevast",
-                >= 17 and < 23 => "Tere õhtust",
-                _ => "Head ööd"
-            };
         }
     }
 }
