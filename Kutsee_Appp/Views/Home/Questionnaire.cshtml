@@ -1,0 +1,46 @@
+﻿@model Kutsee_Appp.Models.Guest
+
+@{
+    ViewBag.Title = "Questionnaire";
+}
+
+<h2>Ankeet</h2>
+<br />
+<br />
+<br />
+<br />
+<br />
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary()
+    <div class="form-group row">
+        <label for="Name" class="col-sm-1 col-form-label">Nimi</label>
+        <div class="col-sm-5">
+            @Html.TextBoxFor(g => g.Name, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="Email" class="col-sm-1 col-form-label">Email</label>
+        <div class="col-sm-5">
+            @Html.TextBoxFor(g => g.Email, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="Phone" class="col-sm-1 col-form-label">Tel</label>
+        <div class="col-sm-5">
+            @Html.TextBoxFor(g => g.Phone, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-6">
+            @Html.DropDownListFor(g => g.WillAttend, new[]
+                            {
+                                new SelectListItem() { Text = "Tulen kindlasti", Value=bool.TrueString },
+                                new SelectListItem() { Text = "Kahjuks, ei saa tulla", Value=bool.FalseString }
+                            },
+                                "Vali siit", new { @class = "form-control" })
+        </div>
+    </div>
+
+    <input type="submit" value="Saada vastus" class="btn btn-success" style="background-color:darkslategrey" >
+}

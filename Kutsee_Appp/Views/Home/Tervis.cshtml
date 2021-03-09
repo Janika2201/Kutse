@@ -1,0 +1,21 @@
+﻿@model Kutsee_Appp.Models.Guest
+
+@{
+    ViewData["Title"] = "Aitäh!";
+}
+
+<h2>Aitäh!</h2>
+
+<p>Tänan sind, @Model.Name</p>
+
+<div>
+    @if (Model.WillAttend == true)
+    {
+        @:Ootame sind, kallis sõber!
+    }
+    else
+    {
+        @:Väga kurb. Näeme hiljem!
+    }
+    @ViewData["Message"]
+</div>
